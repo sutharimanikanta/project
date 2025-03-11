@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Edit Distribution</h2>
+<form method="POST">
+    <div class="form-group">
+        <label>From Station</label>
+        <select class="form-control" name="from_station_id">
+            {% for station in stations %}
+            <option value="{{ station.id }}" 
+                {% if station.id == distribution.from_station_id %}selected{% endif %}>
+                {{ station.name }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label>To Station</label>
+        <select class="form-control" name="to_station_id">
+            {% for station in stations %}
+            <option value="{{ station.id }}" 
+                {% if station.id == distribution.to_station_id %}selected{% endif %}>
+                {{ station.name }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Product</label>
+        <select class="form-control" name="product_id">
+            {% for product in products %}
+            <option value="{{ product.id }}" 
+                {% if product.id == distribution.product_id %}selected{% endif %}>
+                {{ product.name }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Quantity</label>
+        <input type="number" class="form-control" name="quantity" 
+               value="{{ distribution.quantity }}" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>
+{% endblock %}

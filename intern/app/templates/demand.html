@@ -1,0 +1,34 @@
+<!-- demand.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Demand History</h2>
+<a href="{{ url_for('demand.add_demand') }}" class="btn btn-primary mb-3">Add Demand Record</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Station</th>
+            <th>Product</th>
+            <th>Quantity Requested</th>
+            <th>Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for demand in demands %}
+        <tr>
+            <td>{{ demand.station.name }}</td>
+            <td>{{ demand.product.name }}</td>
+            <td>{{ demand.quantity_requested }}</td>
+            <td>{{ demand.date.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td>
+                <a href="{{ url_for('demand.edit_demand', id=demand.id) }}" class="btn btn-sm btn-warning">Edit</a>
+                <form action="{{ url_for('demand.delete_demand', id=demand.id) }}" method="POST" style="display:inline;">
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

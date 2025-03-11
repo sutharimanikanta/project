@@ -1,0 +1,36 @@
+<!-- distributions.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Distributions</h2>
+<a href="{{ url_for('distribution.add_distribution') }}" class="btn btn-primary mb-3">Add Distribution</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>From Station</th>
+            <th>To Station</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for distribution in distributions %}
+        <tr>
+            <td>{{ distribution.from_station.name }}</td>
+            <td>{{ distribution.to_station.name }}</td>
+            <td>{{ distribution.product.name }}</td>
+            <td>{{ distribution.quantity }}</td>
+            <td>{{ distribution.date.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td>
+                <a href="{{ url_for('distribution.edit_distribution', id=distribution.id) }}" class="btn btn-sm btn-warning">Edit</a>
+                <form action="{{ url_for('distribution.delete_distribution', id=distribution.id) }}" method="POST" style="display:inline;">
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
